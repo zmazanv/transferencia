@@ -1,0 +1,35 @@
+###############################################################################
+## Gancho de paccache al Actualizar.
+##
+## Véase alpm-hooks(5) para la documentación.
+###############################################################################
+## paccache When Upgrading Hook.
+##
+## See alpm-hooks(5) for documentation.
+###############################################################################
+##
+##-----------------------------------------------------------------------------
+## Tras actualizar el sistema:
+## Busca versiones viejas de paquetes ajenos instalados y las purga del caché,
+## excepto las 3 versiones más recientes.
+##-----------------------------------------------------------------------------
+## After upgrading the system:
+## Searches for old foreign package versiones and purges them from the cache,
+## except for the 3 most recent versions.
+##-----------------------------------------------------------------------------
+# paccache -rk 3
+##-----------------------------------------------------------------------------
+###############################################################################
+
+[Trigger]
+Type = Package
+Operation = Upgrade
+Target = *
+
+[Action]
+# Description = Checking if there are old foreign package versions to purge from the cache...
+Description = Revisando si hay versiones viejas de paquetes ajenos instalados para purgar del caché...
+Depends = pacman-contrib
+When = PostTransaction
+#Exec = /usr/bin/paccache -rk 3
+Exec = /bin/sh -c 'find /home/sebas/.cache/paru/clone/ -mindepth 1 -maxdepth 1 -type d | /usr/bin/xargs -I {} /usr/bin/paccache -rk 3 --cachedir {}'

@@ -1,0 +1,32 @@
+###############################################################################
+## Gancho de paccache al Remover.
+##
+## Véase alpm-hooks(5) para la documentación.
+###############################################################################
+## paccache When Removing Hook.
+##
+## See alpm-hooks(5) for documentation.
+###############################################################################
+##
+##-----------------------------------------------------------------------------
+## Tras remover paquetes:
+## Purga todas las versiones de paquetes removidos del caché.
+##-----------------------------------------------------------------------------
+## After removing packages:
+## Purges all versions of removed packages from the cache.
+##-----------------------------------------------------------------------------
+# paccache -ruk 0
+##-----------------------------------------------------------------------------
+###############################################################################
+
+[Trigger]
+Type = Package
+Operation = Remove
+Target = *
+
+[Action]
+# Description = Checking if there are versions of uninstalled native packages to purge from the cache...
+Description = Revisando si hay versiones de paquetes nativos desinstalados para purgar del caché...
+Depends = pacman-contrib
+When = PostTransaction
+Exec = /usr/bin/paccache -ruk 0

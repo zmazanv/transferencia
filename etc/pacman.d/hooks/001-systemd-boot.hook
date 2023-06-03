@@ -1,0 +1,32 @@
+###############################################################################
+## Gancho de Actualización de systemd-boot.
+##
+## Véase alpm-hooks(5) para la documentación.
+###############################################################################
+## systemd-boot Update Hook.
+##
+## See alpm-hooks(5) for documentation.
+###############################################################################
+##
+##-----------------------------------------------------------------------------
+## Tras actualizar systemd:
+## Reinicia el servicio de actualización de systemd-boot para actualizar
+## el cargador de arranque.
+##-----------------------------------------------------------------------------
+## After upgrading systemd:
+## Restarts the systemd-boot update service to update the bootloader.
+##-----------------------------------------------------------------------------
+# systemctl restart systemd-boot-update.service
+##-----------------------------------------------------------------------------
+###############################################################################
+
+[Trigger]
+Type = Package
+Operation = Upgrade
+Target = systemd
+
+[Action]
+# Description = Gracefully upgrading systemd-boot...
+Description = Actualizando systemd-boot...
+When = PostTransaction
+Exec = /usr/bin/systemctl restart systemd-boot-update.service

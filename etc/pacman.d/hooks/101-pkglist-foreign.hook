@@ -1,0 +1,32 @@
+###############################################################################
+## Gancho de Lista de Paquetes Ajenos.
+##
+## Véase alpm-hooks(5) para la documentación.
+###############################################################################
+## Foreign Package List Hook.
+##
+## See alpm-hooks(5) for documentation.
+###############################################################################
+##
+##-----------------------------------------------------------------------------
+## Tras instalar o remover paquetes:
+## Regenera la lista en /etc de paquetes ajenos instalados explíctamente.
+##-----------------------------------------------------------------------------
+## After installing o removing packages:
+## Regenerates the list in /etc of explicitly installed foreign packages.
+##-----------------------------------------------------------------------------
+# pacman -Qqem > /etc/pkglist-foreign.txt
+##-----------------------------------------------------------------------------
+###############################################################################
+
+[Trigger]
+Type = Package
+Operation = Install
+Operation = Remove
+Target = *
+
+[Action]
+# Description = Updating lists of explicitly installed foreign packages...
+Description = Actualizando la lista de paquetes ajenos instalados explícitamente...
+When = PostTransaction
+Exec = /bin/sh -c '/usr/bin/pacman -Qqem > /etc/pkglist-foreign.txt'

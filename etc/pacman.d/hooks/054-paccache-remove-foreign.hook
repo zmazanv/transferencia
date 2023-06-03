@@ -1,0 +1,33 @@
+###############################################################################
+## Gancho de paccache al Remover.
+##
+## Véase alpm-hooks(5) para la documentación.
+###############################################################################
+## paccache When Removing Hook.
+##
+## See alpm-hooks(5) for documentation.
+###############################################################################
+##
+##-----------------------------------------------------------------------------
+## Tras remover paquetes:
+## Purga todas las versiones de paquetes nativos removidos del caché.
+##-----------------------------------------------------------------------------
+## After removing packages:
+## Purges all versions of removed native packages from the cache.
+##-----------------------------------------------------------------------------
+# paccache -ruk 0
+##-----------------------------------------------------------------------------
+###############################################################################
+
+[Trigger]
+Type = Package
+Operation = Remove
+Target = *
+
+[Action]
+# Description = Checking if there are versions of uninstalled foreing packages to purge from the cache...
+Description = Revisando si hay versiones de paquetes ajenos desinstalados para purgar del caché...
+Depends = pacman-contrib
+When = PostTransaction
+#Exec = /usr/bin/paccache -ruk 0
+Exec = /bin/sh -c 'find /home/sebas/.cache/paru/clone/ -mindepth 1 -maxdepth 1 -type d | /usr/bin/xargs -I {} /usr/bin/paccache -ruk 0 --cachedir {}'

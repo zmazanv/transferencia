@@ -1,0 +1,34 @@
+###############################################################################
+## Gancho de Módulos de Nvidia.
+##
+## Véase alpm-hooks(5) para la documentación.
+###############################################################################
+## Nvidia Modules Hook.
+##
+## See alpm-hooks(5) for documentation.
+###############################################################################
+##
+##-----------------------------------------------------------------------------
+## Tras actualizar nvidia-dkms:
+## Regenera los initramfs para actualizar los módulos de Nvidia.
+##-----------------------------------------------------------------------------
+## After upgrading nvidia-dkms:
+## Regenerates the initramfs to update the Nvidia modules.
+##-----------------------------------------------------------------------------
+# mkinitcpio -P
+##-----------------------------------------------------------------------------
+###############################################################################
+
+[Trigger]
+Type = Package
+Operation = Install
+Operation = Upgrade
+Operation = Remove
+Target = nvidia-dkms
+
+[Action]
+# Description = Updating Nvidia modules using mkinitcpio...
+Description = Actualizando los módulos de Nvidia usando mkinitcpio...
+Depends = mkinitcpio
+When = PostTransaction
+Exec = /usr/bin/mkinitcpio -P

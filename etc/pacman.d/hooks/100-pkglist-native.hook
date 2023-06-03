@@ -1,0 +1,32 @@
+###############################################################################
+## Gancho de Lista de Paquetes Nativos.
+##
+## Véase alpm-hooks(5) para la documentación.
+###############################################################################
+## Native Package List Hook.
+##
+## See alpm-hooks(5) for documentation.
+###############################################################################
+##
+##-----------------------------------------------------------------------------
+## Tras instalar o remover paquetes:
+## Regenera la lista en /etc de paquetes nativos instalados explíctamente.
+##-----------------------------------------------------------------------------
+## After installing o removing packages:
+## Regenerates the list in /etc of explicitly installed native packages.
+##-----------------------------------------------------------------------------
+# pacman -Qqen > /etc/pkglist-native.txt
+##-----------------------------------------------------------------------------
+###############################################################################
+
+[Trigger]
+Type = Package
+Operation = Install
+Operation = Remove
+Target = *
+
+[Action]
+# Description = Updating list of explicitly installed native packages...
+Description = Actualizando la lista de paquetes nativos instalados explícitamente...
+When = PostTransaction
+Exec = /bin/sh -c '/usr/bin/pacman -Qqen > /etc/pkglist-native.txt'

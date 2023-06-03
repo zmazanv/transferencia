@@ -1,0 +1,32 @@
+###############################################################################
+## Gancho de needrestart.
+##
+## Véase alpm-hooks(5) para la documentación.
+###############################################################################
+## needrestart Hook.
+##
+## See alpm-hooks(5) for documentation.
+###############################################################################
+##
+##-----------------------------------------------------------------------------
+## Tras actualizar el sistema:
+## Busca procesos anticuados y los imprime como lista.
+##-----------------------------------------------------------------------------
+## After upgrading the the system:
+## Looks for outdated processes and prints them as a list.
+##-----------------------------------------------------------------------------
+# needrestart
+##-----------------------------------------------------------------------------
+###############################################################################
+
+[Trigger]
+Type = Package
+Operation = Upgrade
+Target = *
+
+[Action]
+# Description = Checking if any daemons need to be restarted after upgrades...
+Description = Revisando si hay demonios que necesitan ser reiniciados tras actualizar el sistema...
+Depends = needrestart
+When = PostTransaction
+Exec = /usr/bin/needrestart
