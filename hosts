@@ -1,0 +1,17 @@
+###############################################################################
+# /etc/hosts
+#
+# Tabla estática de búsqueda para nombres de host.
+#
+# Véase hosts(5) para la documentación.
+###############################################################################
+# /etc/hosts
+#
+# Static table lookup for hostnames.
+#
+# See hosts(5) for documentation.
+###############################################################################
+
+127.0.0.1 localhost
+::1 localhost
+127.0.1.1 platona
